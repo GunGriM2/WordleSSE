@@ -15,7 +15,7 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -23,6 +23,7 @@ export default {
 }
 
 body {
-  margin: 0;
+
+  margin: 0px auto;
 }
 </style>
