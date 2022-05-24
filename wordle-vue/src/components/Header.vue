@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <v-app-bar>
     <nav>
       <div class="branding">
         <img src="@/assets/wordle-icon.png"/>
@@ -52,7 +52,7 @@
     </nav>
 
 <!--    <it-divider style="margin: 0px"/>-->
-  </header>
+  </v-app-bar>
 
 </template>
 
@@ -68,10 +68,11 @@ export default class Header extends Vue {
 </script>
 
 <style lang="scss" scoped>
-header {
+.v-app-bar {
   top: 0;
   background-color: rgba(245, 248, 240, 0.96);
   width: 100%;
+  max-height: 66px;
   position: sticky;
   z-index: 99;
 

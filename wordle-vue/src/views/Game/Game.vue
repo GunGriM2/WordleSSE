@@ -11,10 +11,10 @@
         <div
             v-for="(row, index) in board"
             :class="[
-        'row',
-        shakeRowIndex === index && 'shake',
-        success && currentRowIndex === index && 'jump'
-      ]"
+          'row',
+          shakeRowIndex === index && 'shake',
+          success && currentRowIndex === index && 'jump'
+        ]"
         >
           <div
               v-for="(tile, index) in row"
@@ -26,18 +26,17 @@
             <div
                 :class="['back', tile.state]"
                 :style="{
-            transitionDelay: `${index * 300}ms`,
-            animationDelay: `${index * 100}ms`
-          }"
+              transitionDelay: `${index * 300}ms`,
+              animationDelay: `${index * 100}ms`
+            }"
             >
               {{ tile.letter }}
             </div>
           </div>
         </div>
       </div>
-      <Keyboard class="game" @key="onKey" :letterStates="letterStates" :key="keyComponent"/>
+      <Keyboard  @key="onKey" :letterStates="letterStates" :key="keyComponent"/>
     </div>
-
   </div>
 </template>
 
@@ -96,6 +95,9 @@ export default class Game extends Vue {
     } else if (key === 'Enter') {
       this.completeRow()
       this.keyComponent++
+      localStorage.setItem('board',JSON.stringify(this.board))
+      localStorage.setItem('currentRowIndex', JSON.stringify(this.currentRowIndex))
+      localStorage.setItem('letterStates', JSON.stringify(this.letterStates))
     }
   }
 
@@ -177,6 +179,8 @@ export default class Game extends Vue {
           this.showMessage(this.answer.toUpperCase(), -1)
         }, 1600)
       }
+
+
     } else {
       this.shake()
       this.showMessage('Not enough letters')
@@ -215,7 +219,11 @@ export default class Game extends Vue {
   mounted() {
     // Get word of the day
     this.answer = getWordOfTheDay()
-
+    if (localStorage.getItem('board')) {
+      this.board = JSON.parse(localStorage.getItem('board')!)
+      this.currentRowIndex = JSON.parse(localStorage.getItem('currentRowIndex')!)
+      this.letterStates = JSON.parse(localStorage.getItem('letterStates')!)
+    }
     // Handle keyboard input.
     window.addEventListener('keyup', this.onKeyup)
   }
@@ -228,7 +236,7 @@ export default class Game extends Vue {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 .game {
   max-width: 600px;
