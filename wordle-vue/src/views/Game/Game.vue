@@ -1,40 +1,43 @@
 <template>
-  <div class="game">
-    <Transition>
-      <div class="message" v-if="message">
-        {{ message }}
-        <pre v-if="grid">{{ grid }}</pre>
-      </div>
-    </Transition>
-    <div id="board">
-      <div
-          v-for="(row, index) in board"
-          :class="[
+  <div>
+    <div class="game">
+      <Transition>
+        <div class="message" v-if="message">
+          {{ message }}
+          <pre v-if="grid">{{ grid }}</pre>
+        </div>
+      </Transition>
+      <div id="board">
+        <div
+            v-for="(row, index) in board"
+            :class="[
         'row',
         shakeRowIndex === index && 'shake',
         success && currentRowIndex === index && 'jump'
       ]"
-      >
-        <div
-            v-for="(tile, index) in row"
-            :class="['tile', tile.letter && 'filled', tile.state && 'revealed']"
         >
-          <div class="front" :style="{ transitionDelay: `${index * 300}ms` }">
-            {{ tile.letter }}
-          </div>
           <div
-              :class="['back', tile.state]"
-              :style="{
+              v-for="(tile, index) in row"
+              :class="['tile', tile.letter && 'filled', tile.state && 'revealed']"
+          >
+            <div class="front" :style="{ transitionDelay: `${index * 300}ms` }">
+              {{ tile.letter }}
+            </div>
+            <div
+                :class="['back', tile.state]"
+                :style="{
             transitionDelay: `${index * 300}ms`,
             animationDelay: `${index * 100}ms`
           }"
-          >
-            {{ tile.letter }}
+            >
+              {{ tile.letter }}
+            </div>
           </div>
         </div>
       </div>
+      <Keyboard class="game" @key="onKey" :letterStates="letterStates" :key="keyComponent"/>
     </div>
-    <Keyboard @key="onKey" :letterStates="letterStates" :key="keyComponent"/>
+
   </div>
 </template>
 
@@ -228,7 +231,7 @@ export default class Game extends Vue {
 <style scoped>
 
 .game {
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
 }
 

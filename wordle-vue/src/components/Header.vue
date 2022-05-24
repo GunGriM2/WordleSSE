@@ -6,25 +6,63 @@
       </div>
       <ul class="navigation">
         <li>
+          <v-dialog
+              transition="dialog-bottom-transition"
+              max-width="600"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                  color="white"
+                  v-bind="attrs"
+                  v-on="on"
+              >How to play</v-btn>
+            </template>
+            <template v-slot:default="dialog">
+              <v-card>
+                <v-toolbar
+                    color="black"
+                    dark
+                >HOW TO PLAY</v-toolbar>
+                <v-card-text>
+                  <div>
+                    <p>Guess the WORDLE in six tries.</p>
+                    <p>Each guess must be a valid five-letter word. Hit the enter button to submit.</p>
+                    <p>After each guess, the color of the tiles will change to show how close your guess was to the word.</p>
+                    <br>
+                    Examples
+                  </div>
+                </v-card-text>
+                <v-card-actions class="justify-end">
+                  <v-btn
+                      text
+                      @click="dialog.value = false; overlay = false"
+                  >Close</v-btn>
+                </v-card-actions>
+              </v-card>
+            </template>
+          </v-dialog>
+        </li>
+        <li>
           <router-link to="/"><v-btn type="primary">Home</v-btn></router-link>
         </li>
         <li>
           <router-link to="/about"><v-btn type="primary">About</v-btn></router-link>
         </li>
       </ul>
-
     </nav>
+
 <!--    <it-divider style="margin: 0px"/>-->
   </header>
 
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Header extends Vue {
-
+  overlay: boolean = false;
+  zIndex: number = 0;
 };
 
 </script>
