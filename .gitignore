@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /dist
+/wordle-vue/styleguide
 yarn.lock*
 
 /tests/e2e/videos/
