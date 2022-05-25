@@ -1,1 +1,1 @@
-# WordleSPE
+# WordleSSE
