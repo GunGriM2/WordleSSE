@@ -13,6 +13,14 @@ export default {
     return api().get('/user', {withCredentials: true})
   },
 
+  getAll () {
+    return api().get('/users')
+  },
+
+  updateStatistics(data) {
+    return api().patch('/statistics', data,{withCredentials: true})
+  },
+
   logout () {
     return api().post('/logout', {withCredentials: true})
   }

@@ -6,7 +6,7 @@
       </div>
       <ul class="navigation">
         <li>
-          <Statistics/>
+          <Statistics :isVisible="isVisible"/>
         </li>
         <li>
           <v-dialog
@@ -48,7 +48,7 @@
           <router-link to="/"><v-btn elevation="0">Play</v-btn></router-link>
         </li>
         <li>
-          <router-link to="/about"><v-btn elevation="0">About</v-btn></router-link>
+          <router-link to="/rating"><v-btn elevation="0">Rating</v-btn></router-link>
         </li>
         <li v-if="!this.$store.state.authenticated">
           <router-link to="/login"><v-btn elevation="0">Login</v-btn></router-link>
@@ -74,6 +74,7 @@ import UserService from "@/services/UserService";
 })
 export default class Header extends Vue {
 
+  isVisible: boolean = false
 
   async logout() {
     try {

@@ -127,7 +127,7 @@ export default class Game extends Vue {
     }
   }
 
-  completeRow() {
+  async completeRow() {
     if (this.currentRow.every((tile) => tile.letter)) {
       const guess = this.currentRow.map((tile) => tile.letter).join('')
       if (!allWords.includes(guess) && guess !== this.answer) {
@@ -177,6 +177,8 @@ export default class Game extends Vue {
               -1
           )
         }, 1600)
+
+        await UserService.updateStatistics({state: this.state, currentRow: this.currentRowIndex+1})
       } else if (this.currentRowIndex < this.board.length - 1) {
           // go the next row
           this.currentRowIndex++
@@ -189,6 +191,7 @@ export default class Game extends Vue {
         }, 1600)
         this.state = GameState.FAIL
         this.allowInput = false
+        await UserService.updateStatistics({state: this.state, currentRow: this.currentRowIndex+1})
       }
 
 
