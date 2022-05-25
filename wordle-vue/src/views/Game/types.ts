@@ -4,3 +4,9 @@ export const enum LetterState {
     PRESENT = 'present',
     ABSENT = 'absent'
 }
+
+export const enum GameState {
+    IN_PROCESS = 'IN_PROCESS',
+    SUCCESS = 'SUCCESS',
+    FAIL = 'FAIL'
+}

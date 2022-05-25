@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="time--box">
-      <v-sheet elevation="4" >{{ ("0" + this.hours).slice(-2) }}:{{ ("0" + this.minutes).slice(-2) }}:{{ ("0" + this.seconds).slice(-2) }}</v-sheet>
+    <div class="time--box" v-if="seconds">
+      <v-sheet elevation="0" >{{ ("0" + this.hours).slice(-2) }}:{{ ("0" + this.minutes).slice(-2) }}:{{ ("0" + this.seconds).slice(-2) }}</v-sheet>
     </div>
   </div>
 
@@ -43,6 +43,9 @@ export default class Timer extends Vue {
   justify-content: center;
 
   .v-sheet {
+    color: black;
+    font-size: xx-large;
+    font-weight: bold;
     margin: 0 5px;
     width: 150px;
     height: 60px;

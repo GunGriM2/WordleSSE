@@ -43,8 +43,8 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import Keyboard from '@/components/Keyboard.vue'
-import { LetterState } from './types'
-import { getWordOfTheDay, allWords } from './words'
+import {GameState, LetterState} from './types'
+import {allWords, getWordOfTheDay} from './words'
 
 
 @Component({
@@ -84,6 +84,7 @@ export default class Game extends Vue {
     [LetterState.ABSENT]: '⬜',
     [LetterState.INITIAL]: null
   };
+  state: GameState = GameState.IN_PROCESS;
 
 
   onKey(key: string) {
@@ -98,6 +99,12 @@ export default class Game extends Vue {
       localStorage.setItem('board',JSON.stringify(this.board))
       localStorage.setItem('currentRowIndex', JSON.stringify(this.currentRowIndex))
       localStorage.setItem('letterStates', JSON.stringify(this.letterStates))
+      localStorage.setItem('state', JSON.stringify(this.state))
+      localStorage.setItem('allowInput', JSON.stringify(this.allowInput))
+      const date = new Date()
+      localStorage.setItem('date', JSON.stringify(date.getFullYear()
+          + "/" + (date.getMonth() + 1)
+          + "/" + date.getDate()))
     }
   }
 
@@ -157,6 +164,9 @@ export default class Game extends Vue {
       this.allowInput = false
       if (this.currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
         // yay!
+        this.success = true
+        this.state = GameState.SUCCESS
+        this.allowInput = false
         setTimeout(() => {
           this.grid = this.genResultGrid()
           this.showMessage(
@@ -165,19 +175,19 @@ export default class Game extends Vue {
                   ],
               -1
           )
-          this.success = true
         }, 1600)
       } else if (this.currentRowIndex < this.board.length - 1) {
           // go the next row
           this.currentRowIndex++
-          setTimeout(() => {
-            this.allowInput = true
-          }, 1600)
+          this.allowInput = true
+
       } else {
         // game over :(
         setTimeout(() => {
           this.showMessage(this.answer.toUpperCase(), -1)
         }, 1600)
+        this.state = GameState.FAIL
+        this.allowInput = false
       }
 
 
@@ -217,12 +227,27 @@ export default class Game extends Vue {
   }
 
   mounted() {
+
     // Get word of the day
     this.answer = getWordOfTheDay()
-    if (localStorage.getItem('board')) {
+    const date = new Date()
+    const day = JSON.parse(JSON.stringify(date.getFullYear()
+        + "/" + (date.getMonth() + 1)
+        + "/" + date.getDate()))
+
+    if (localStorage.getItem('board') && (day === JSON.parse(localStorage.getItem('date')!))) {
       this.board = JSON.parse(localStorage.getItem('board')!)
       this.currentRowIndex = JSON.parse(localStorage.getItem('currentRowIndex')!)
       this.letterStates = JSON.parse(localStorage.getItem('letterStates')!)
+      this.state = JSON.parse(localStorage.getItem('state')!)
+      this.allowInput = JSON.parse(localStorage.getItem('allowInput')!)
+    } else {
+      localStorage.removeItem('board')
+      localStorage.removeItem('date')
+      localStorage.removeItem('currentRowIndex')
+      localStorage.removeItem('letterStates')
+      localStorage.removeItem('state')
+      localStorage.removeItem('allowInput')
     }
     // Handle keyboard input.
     window.addEventListener('keyup', this.onKeyup)

@@ -6,16 +6,20 @@
       </div>
       <ul class="navigation">
         <li>
+          <Statistics/>
+        </li>
+        <li>
           <v-dialog
               transition="dialog-bottom-transition"
               max-width="600"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                  color="white"
+                  elevation="0"
+                  color="none"
                   v-bind="attrs"
                   v-on="on"
-              >How to play</v-btn>
+              ><v-icon>mdi-help-circle-outline</v-icon></v-btn>
             </template>
             <template v-slot:default="dialog">
               <v-card>
@@ -24,13 +28,11 @@
                     dark
                 >HOW TO PLAY</v-toolbar>
                 <v-card-text>
-                  <div>
-                    <p>Guess the WORDLE in six tries.</p>
-                    <p>Each guess must be a valid five-letter word. Hit the enter button to submit.</p>
-                    <p>After each guess, the color of the tiles will change to show how close your guess was to the word.</p>
-                    <br>
-                    Examples
-                  </div>
+                  <p>Guess the <strong>WORDLE</strong> in six tries.</p>
+                  <p>Each guess must be a valid five-letter word. Hit the enter button to submit.</p>
+                  <p>After each guess, the color of the tiles will change to show how close your guess was to the word.</p>
+                  <v-divider></v-divider>
+                  <p><strong>A new WORDLE will be available each day!</strong></p>
                 </v-card-text>
                 <v-card-actions class="justify-end">
                   <v-btn
@@ -43,10 +45,13 @@
           </v-dialog>
         </li>
         <li>
-          <router-link to="/"><v-btn type="primary">Home</v-btn></router-link>
+          <router-link to="/"><v-btn elevation="0">Play</v-btn></router-link>
         </li>
         <li>
-          <router-link to="/about"><v-btn type="primary">About</v-btn></router-link>
+          <router-link to="/about"><v-btn elevation="0">About</v-btn></router-link>
+        </li>
+        <li>
+          <router-link to="/login"><v-btn elevation="0">Login</v-btn></router-link>
         </li>
       </ul>
     </nav>
@@ -58,11 +63,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import Statistics from "@/components/Statistics.vue";
 
-@Component
+@Component({
+  components: {Statistics}
+})
 export default class Header extends Vue {
-  overlay: boolean = false;
-  zIndex: number = 0;
+
 };
 
 </script>
@@ -75,7 +82,11 @@ export default class Header extends Vue {
   max-height: 66px;
   position: sticky;
   z-index: 99;
+  margin-bottom: 10px;
 
+  .v-card-text {
+    text-align: left !important;
+  }
 
   nav {
     position: relative;
@@ -96,6 +107,7 @@ export default class Header extends Vue {
     li {
       //padding: 16px;
       margin-left: 16px;
+
     }
 
     a {
