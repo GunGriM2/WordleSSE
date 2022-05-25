@@ -8,6 +8,7 @@
 <script>
 import Header from "@/components/Header";
 import {Component, Vue} from "vue-property-decorator";
+import UserService from "@/services/UserService";
 
 @Component({
   components: {

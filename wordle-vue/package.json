@@ -11,6 +11,7 @@
     "styleguide:build": "vue-cli-service styleguidist:build"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "chart.js": "^2.9",
     "chartjs-plugin-datalabels": "1",
     "core-js": "^3.6.5",

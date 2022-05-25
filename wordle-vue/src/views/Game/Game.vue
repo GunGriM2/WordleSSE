@@ -45,6 +45,7 @@ import {Component, Vue} from 'vue-property-decorator';
 import Keyboard from '@/components/Keyboard.vue'
 import {GameState, LetterState} from './types'
 import {allWords, getWordOfTheDay} from './words'
+import UserService from "@/services/UserService";
 
 
 @Component({
@@ -226,7 +227,17 @@ export default class Game extends Vue {
     this.onKey(e.key)
   }
 
-  mounted() {
+
+  async mounted() {
+
+      try {
+        const response = await UserService.getOne()
+        if (response.data.id) {
+          await this.$store.dispatch('setAuth', true)
+        }
+      } catch (e) {
+        await this.$store.dispatch('setAuth', false)
+      }
 
     // Get word of the day
     this.answer = getWordOfTheDay()

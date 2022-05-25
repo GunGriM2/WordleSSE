@@ -50,8 +50,11 @@
         <li>
           <router-link to="/about"><v-btn elevation="0">About</v-btn></router-link>
         </li>
-        <li>
+        <li v-if="!this.$store.state.authenticated">
           <router-link to="/login"><v-btn elevation="0">Login</v-btn></router-link>
+        </li>
+        <li v-else>
+          <v-btn elevation="0" @click="logout">Logout</v-btn>
         </li>
       </ul>
     </nav>
@@ -64,12 +67,24 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Statistics from "@/components/Statistics.vue";
+import UserService from "@/services/UserService";
 
 @Component({
   components: {Statistics}
 })
 export default class Header extends Vue {
 
+
+  async logout() {
+    try {
+      await UserService.logout()
+      await this.$store.dispatch('setAuth', false)
+    } catch (e) {
+
+    }
+
+
+  }
 };
 
 </script>
