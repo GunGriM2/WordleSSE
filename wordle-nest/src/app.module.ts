@@ -4,17 +4,22 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {User} from "./user.entity";
 import {JwtModule} from "@nestjs/jwt";
+import {ServeStaticModule} from "@nestjs/serve-static";
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'client/dist'),
+    }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       host: 'localhost',
-      username: 'root',
+      username: 'postgres',
       password: null,
       database: 'wordle',
       entities: [User],
-      synchronize: false,
+      synchronize: true,
     }),
     TypeOrmModule.forFeature([User]),
     JwtModule.register({

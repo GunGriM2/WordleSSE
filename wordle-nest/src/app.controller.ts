@@ -16,6 +16,12 @@ export class AppController {
       @Body('name') name: string,
       @Body('password') password: string
   ) {
+    const existing_user = await this.appService.findOne({name});
+
+    if (existing_user) {
+      throw new BadRequestException('name is taken');
+    }
+
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = await this.appService.create({
@@ -37,7 +43,7 @@ export class AppController {
     const user = await this.appService.findOne({name});
 
     if (!user) {
-      throw new BadRequestException('invalid credentials');
+      throw new BadRequestException('no such user');
     }
 
     if (!await bcrypt.compare(password, user.password)) {

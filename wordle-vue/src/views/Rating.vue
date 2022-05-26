@@ -35,8 +35,10 @@ export default class Rating extends Vue {
         "user_max_streak": number
       }) => {
         return {...object,
-          win_percent: String(Math.ceil((object.user_1 + object.user_2  + object.user_3  * object.user_4
-              + object.user_5  + object.user_6)/object.user_tries*100)) + '%',
+          win_percent: Math.ceil((object.user_1 + object.user_2  + object.user_3 + object.user_4
+              + object.user_5  + object.user_6)/object.user_tries * 100) ?
+              String(Math.ceil((object.user_1 + object.user_2  + object.user_3  + object.user_4
+              + object.user_5  + object.user_6)/object.user_tries * 100)) + '%' : '0%',
           rating: object.user_1 * 6
           + object.user_2 * 5 + object.user_3 * 4 * object.user_4 * 3
           + object.user_5 * 2 + object.user_6 * 1 + object.user_max_streak * 3
