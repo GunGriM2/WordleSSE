@@ -1,20 +1,22 @@
-import { Module } from '@nestjs/common';
+import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
 import {User} from "./user.entity";
 import {JwtModule} from "@nestjs/jwt";
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      username: 'postgres',
-      password: '',
-      database: 'wordle',
-      entities: [User],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'postgres',
+        host: 'localhost',
+        username: 'postgres',
+        password: '',
+        database: 'wordle',
+        entities: [User],
+        synchronize: true,
+      }),
     }),
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
