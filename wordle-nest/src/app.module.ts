@@ -10,6 +10,7 @@ import {JwtModule} from "@nestjs/jwt";
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
+
       username: 'postgres',
       password: null,
       database: 'wordle',
