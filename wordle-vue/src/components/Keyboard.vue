@@ -30,18 +30,34 @@
 <script lang="ts">
 import {Component, Emit, Prop, Vue} from 'vue-property-decorator';
 import { LetterState } from '@/views/Game/types'
-
+/**
+ * Virtual keyboard
+ *
+ * @displayName Keyboard
+ */
 @Component
 export default class Keyboard extends Vue {
+  /**
+   * Rows of symbols for keyboard
+   */
   rows: Array<Array<string>> = [
     'qwertyuiop'.split(''),
     'asdfghjkl'.split(''),
     ['Enter', ...'zxcvbnm'.split(''), 'Backspace']
   ]
 
+  /**
+   * Rows of symbols for keyboard
+   * @values 0, absent, present, correct
+   */
   @Prop()
   private letterStates!: Record<string, LetterState>
 
+  /**
+   * Key press event
+   *
+   * @event key
+   */
   @Emit('key')
   onKey(key: string): void {}
 

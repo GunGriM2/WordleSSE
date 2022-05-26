@@ -58,6 +58,12 @@
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import Timer from "@/components/Timer.vue";
 import UserService from "@/services/UserService";
+
+/**
+ * User statistics dialog
+ *
+ * @displayName Statistics Dialog
+ */
 @Component({
   components: {Timer}
 })
@@ -78,6 +84,7 @@ export default class Statistics extends Vue {
   six: number = 0
 
   async mounted() {
+
     try {
       const response = await UserService.getOne()
       if (response.data) {
