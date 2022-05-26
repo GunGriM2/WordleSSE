@@ -11,7 +11,7 @@ import {JwtModule} from "@nestjs/jwt";
       type: 'postgres',
       host: 'localhost',
       username: 'postgres',
-      password: null,
+      password: '',
       database: 'wordle',
       entities: [User],
       synchronize: true,
