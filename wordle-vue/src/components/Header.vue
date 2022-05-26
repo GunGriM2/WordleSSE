@@ -6,7 +6,7 @@
       </div>
       <ul class="navigation">
         <li>
-          <Statistics :isVisible="isVisible"/>
+          <Statistics :isVisible="isVisible" :key="statKey"/>
         </li>
         <li>
           <v-dialog
@@ -69,17 +69,31 @@ import { Component, Vue } from 'vue-property-decorator';
 import Statistics from "@/components/Statistics.vue";
 import UserService from "@/services/UserService";
 
+/**
+ * Navigation bar of the App
+ *
+ * @displayName Navbar
+ */
 @Component({
   components: {Statistics}
 })
 export default class Header extends Vue {
-
+  /**
+   * Makes statistics dialog visible
+   */
   isVisible: boolean = false
-
+  statKey: number = 0
+  /**
+   * Logs user out
+   *
+   * @public
+   */
   async logout() {
     try {
       await UserService.logout()
       await this.$store.dispatch('setAuth', false)
+      this.statKey++;
+
     } catch (e) {
 
     }
@@ -150,3 +164,4 @@ export default class Header extends Vue {
 
 }
 </style>
+

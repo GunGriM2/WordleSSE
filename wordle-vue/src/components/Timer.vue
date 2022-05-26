@@ -10,6 +10,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
+/**
+ * Timer for the next try
+ *
+ * @displayName Timer
+ */
 @Component
 export default class Timer extends Vue {
 
