@@ -1,1 +1,3 @@
 # WordleSSE
+
+University project
